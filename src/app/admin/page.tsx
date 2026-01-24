@@ -1,0 +1,177 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { LogoutButton } from './LogoutButton';
+import { useLanguage } from '@/lib/LanguageContext';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+
+interface Post {
+    id: string;
+    title: string;
+    slug: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export default function AdminDashboard() {
+    const { t, language } = useLanguage();
+    const router = useRouter();
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('/api/posts')
+            .then(res => {
+                if (res.status === 401) {
+                    router.push('/admin/login');
+                    return [];
+                }
+                return res.json();
+            })
+            .then(data => {
+                setPosts(data || []);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }, [router]);
+
+    function formatDate(date: string): string {
+        return new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        }).format(new Date(date));
+    }
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-ink-muted">Loading...</div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen">
+            {/* Admin Header */}
+            <header className="border-b border-paper-dark bg-paper-light/80 backdrop-blur-sm sticky top-0 z-50">
+                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full border-2 border-federal-green flex items-center justify-center bg-paper">
+                            <span className="text-federal-green font-serif text-sm font-bold">$</span>
+                        </div>
+                        <div>
+                            <h1 className="font-serif text-lg font-bold text-ink">{t('adminDashboard')}</h1>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <LanguageSwitcher />
+                        <Link href="/admin/about" className="text-sm text-ink-muted hover:text-federal-green transition-colors">
+                            {t('aboutTitle')}
+                        </Link>
+                        <Link href="/" className="text-sm text-ink-muted hover:text-federal-green transition-colors">
+                            {t('adminViewSite')}
+                        </Link>
+                        <LogoutButton />
+                    </div>
+                </div>
+            </header>
+
+            <main className="max-w-6xl mx-auto px-6 py-8">
+                {/* Actions Bar */}
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 className="font-serif text-2xl font-bold text-ink">{t('adminArticles')}</h2>
+                        <p className="text-ink-muted mt-1">{posts.length} {t('adminArticlesTotal')}</p>
+                    </div>
+                    <Link href="/admin/editor/new">
+                        <Button>
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            </svg>
+                            {t('adminNewArticle')}
+                        </Button>
+                    </Link>
+                </div>
+
+                {/* Posts List */}
+                {posts.length === 0 ? (
+                    <Card className="p-12 text-center">
+                        <div className="w-16 h-16 rounded-full border-2 border-dashed border-federal-green/30 flex items-center justify-center mx-auto mb-6">
+                            <svg className="w-8 h-8 text-federal-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <h3 className="font-serif text-xl text-ink mb-2">{t('adminNoArticles')}</h3>
+                        <p className="text-ink-muted mb-6">{t('adminCreateFirst')}</p>
+                        <Link href="/admin/editor/new">
+                            <Button>{t('adminCreateArticle')}</Button>
+                        </Link>
+                    </Card>
+                ) : (
+                    <div className="space-y-4">
+                        {posts.map((post) => (
+                            <Card key={post.id} hover className="p-6">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <h3 className="font-serif text-lg font-bold text-ink truncate">
+                                                {post.title || 'Untitled'}
+                                            </h3>
+                                            <span className={`
+                        px-2 py-0.5 text-xs font-medium rounded-full
+                        ${post.status === 'PUBLISHED'
+                                                    ? 'bg-federal-green/10 text-federal-green'
+                                                    : 'bg-seal-gold/20 text-seal-gold-dark'
+                                                }
+                      `}>
+                                                {post.status === 'PUBLISHED' ? t('editorPublished') : t('editorDraft')}
+                                            </span>
+                                        </div>
+                                        <p className="text-sm text-ink-muted">
+                                            {t('adminLastEdited')} {formatDate(post.updatedAt)}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 ml-4">
+                                        {post.status === 'PUBLISHED' && (
+                                            <Link
+                                                href={`/${post.slug}`}
+                                                className="p-2 text-ink-muted hover:text-federal-green transition-colors"
+                                                title="View"
+                                            >
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </Link>
+                                        )}
+                                        <Link
+                                            href={`/admin/editor/${post.id}`}
+                                            className="p-2 text-ink-muted hover:text-federal-green transition-colors"
+                                            title="Edit"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                )}
+            </main>
+        </div>
+    );
+}

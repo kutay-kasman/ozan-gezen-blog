@@ -1,26 +1,303 @@
 @import "tailwindcss";
 
+/* ===== Banknote Theme Variables ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Paper Colors - US Dollar Bill Off-White/Cream */
+  --paper: #E8E3D9;
+  --paper-dark: #D4CFC5;
+  --paper-light: #F2EDE3;
+
+  /* Ink Colors - Primary Text */
+  --ink: #2C2C2C;
+  --ink-light: #5A5A5A;
+  --ink-muted: #8A8A8A;
+
+  /* Federal Reserve Green - Primary Accent */
+  --federal-green: #355E3B;
+  --federal-green-dark: #2A4A2F;
+  --federal-green-light: #4A7A51;
+
+  /* Seal Gold - Secondary Accent */
+  --seal-gold: #C5A572;
+  --seal-gold-dark: #A68B5B;
+
+  /* Background & Foreground */
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
+/* ===== Tailwind v4 Theme Configuration ===== */
 @theme inline {
+  /* Colors */
+  --color-paper: var(--paper);
+  --color-paper-dark: var(--paper-dark);
+  --color-paper-light: var(--paper-light);
+  --color-ink: var(--ink);
+  --color-ink-light: var(--ink-light);
+  --color-ink-muted: var(--ink-muted);
+  --color-federal-green: var(--federal-green);
+  --color-federal-green-dark: var(--federal-green-dark);
+  --color-federal-green-light: var(--federal-green-light);
+  --color-seal-gold: var(--seal-gold);
+  --color-seal-gold-dark: var(--seal-gold-dark);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Typography */
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ===== Base Styles ===== */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/textures/noise.svg");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 1;
+}
+
+/* ===== Typography ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+/* ===== Currency Engraving Border ===== */
+.border-engraving {
+  position: relative;
+  border: 2px solid var(--federal-green);
+}
+
+.border-engraving::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--federal-green);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.border-engraving::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed var(--federal-green);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* ===== Paper Card Effect ===== */
+.paper-card {
+  background: var(--paper-light);
+  border: 1px solid var(--paper-dark);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== Embossed Effect ===== */
+.embossed {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8),
+    0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.embossed-inset {
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ===== Link Styles ===== */
+a {
+  color: var(--federal-green);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--federal-green-dark);
+}
+
+/* ===== Selection ===== */
+::selection {
+  background: var(--federal-green);
+  color: var(--paper-light);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--federal-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--federal-green-dark);
+}
+
+/* ===== Form Elements ===== */
+input,
+textarea,
+select {
+  background: var(--paper-light);
+  border: 1px solid var(--paper-dark);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--federal-green);
+  box-shadow: 0 0 0 2px rgba(53, 94, 59, 0.1);
+}
+
+/* ===== Button Styles ===== */
+.btn-primary {
+  background: var(--federal-green);
+  color: var(--paper-light);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary:hover {
+  background: var(--federal-green-dark);
+  transform: translateY(-1px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary {
+  background: var(--paper-light);
+  color: var(--federal-green);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--federal-green);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--federal-green);
+  color: var(--paper-light);
+}
+
+/* ===== TipTap Editor Styles ===== */
+.tiptap {
+  outline: none;
+  min-height: 400px;
+  padding: 1.5rem;
+  font-family: var(--font-sans);
+  line-height: 1.8;
+}
+
+.tiptap p {
+  margin: 1em 0;
+}
+
+.tiptap h1 {
+  font-size: 2.5rem;
+  margin: 1.5em 0 0.5em;
+}
+
+.tiptap h2 {
+  font-size: 2rem;
+  margin: 1.25em 0 0.5em;
+}
+
+.tiptap h3 {
+  font-size: 1.5rem;
+  margin: 1em 0 0.5em;
+}
+
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5em 0;
+  border-radius: 4px;
+}
+
+.tiptap blockquote {
+  border-left: 3px solid var(--federal-green);
+  padding-left: 1rem;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: var(--ink-light);
+}
+
+.tiptap code {
+  background: var(--paper-dark);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.tiptap pre {
+  background: var(--ink);
+  color: var(--paper-light);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.tiptap pre code {
+  background: none;
+  padding: 0;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding-left: 1.5rem;
+  margin: 1em 0;
+}
+
+.tiptap li {
+  margin: 0.5em 0;
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 1px solid var(--paper-dark);
+  margin: 2em 0;
 }
