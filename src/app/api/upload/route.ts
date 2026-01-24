@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import cloudinary from '@/lib/cloudinary';
 
 export async function POST(request: NextRequest) {
     // Check authentication
@@ -20,25 +19,19 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'No file provided' }, { status: 400 });
         }
 
-        // Create unique filename
-        const timestamp = Date.now();
-        const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-        const filename = `${timestamp}-${originalName}`;
-
-        // Ensure uploads directory exists
-        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-        await mkdir(uploadsDir, { recursive: true });
-
-        // Save file
+        // Convert file to base64 for Cloudinary upload
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
-        const filepath = path.join(uploadsDir, filename);
-        await writeFile(filepath, buffer);
+        const base64 = buffer.toString('base64');
+        const dataURI = `data:${file.type};base64,${base64}`;
 
-        // Return URL
-        const url = `/uploads/${filename}`;
+        // Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(dataURI, {
+            folder: 'ozan-blog',
+            resource_type: 'auto',
+        });
 
-        return NextResponse.json({ url });
+        return NextResponse.json({ url: result.secure_url });
     } catch (error) {
         console.error('Upload error:', error);
         return NextResponse.json(
