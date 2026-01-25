@@ -3,12 +3,34 @@
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+import { useState, useEffect } from 'react';
 
 export function Header() {
     const { t } = useLanguage();
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Show header when scrolling up or at top
+            if (currentScrollY < lastScrollY || currentScrollY < 50) {
+                setIsVisible(true);
+            } else {
+                // Hide header when scrolling down
+                setIsVisible(false);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]);
 
     return (
-        <header className="border-b border-paper-dark bg-paper-light/80 backdrop-blur-sm sticky top-0 z-50">
+        <header className={`border-b border-paper-dark bg-paper-light/80 backdrop-blur-sm sticky top-0 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
             <div className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
                 <Link href="/" className="group">
                     <div className="flex items-center gap-3">
@@ -36,7 +58,7 @@ export function Header() {
                     </Link>
                     <Link
                         href="/about"
-                        className="text-sm font-medium text-ink-light hover:text-federal-green transition-colors hidden sm:inline"
+                        className="text-sm font-medium text-ink-light hover:text-federal-green transition-colors"
                     >
                         {t('navAbout')}
                     </Link>
