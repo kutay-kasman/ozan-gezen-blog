@@ -1,5 +1,6 @@
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { CommentsSection } from '@/components/ui/CommentsSection';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -186,6 +187,9 @@ export default async function PostPage({ params }: Props) {
                             Thanks for reading.
                         </p>
                     </footer>
+
+                    {/* Comments Section */}
+                    <CommentsSection postId={post.id} />
                 </article>
             </main>
 

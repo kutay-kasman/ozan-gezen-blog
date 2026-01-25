@@ -2,8 +2,8 @@
 export const translations = {
     en: {
         // Site
-        siteName: "Ozan Gezen's Finance Blog",
-        siteTagline: "Insights & Analysis",
+        siteName: "Ozan Gezen Economics",
+        siteTagline: "Analysis & Insights",
 
         // Home Hero
         heroTitle: "Financial Wisdom",
@@ -84,11 +84,21 @@ export const translations = {
         aboutPhotoLabel: "Profile Photo",
         aboutSaveSuccess: "About info saved successfully!",
         aboutNoInfo: "No information available yet.",
+
+        // Comments
+        commentsTitle: "Comments",
+        commentsName: "Your Name",
+        commentsNamePlaceholder: "Enter your name",
+        commentsContent: "Your Comment",
+        commentsContentPlaceholder: "Write your comment...",
+        commentsSubmit: "Submit Comment",
+        commentsSubmitting: "Submitting...",
+        commentsEmpty: "No comments yet. Be the first to comment!",
     },
     tr: {
         // Site
-        siteName: "Ozan Gezen'in Finans Blogu",
-        siteTagline: "İçgörü & Analiz",
+        siteName: "Ozan Gezen Ekonomi",
+        siteTagline: "Analiz & İçgörü",
 
         // Home Hero
         heroTitle: "Finansal Bilgelik",
@@ -169,6 +179,16 @@ export const translations = {
         aboutPhotoLabel: "Profil Fotoğrafı",
         aboutSaveSuccess: "Hakkımda bilgisi başarıyla kaydedildi!",
         aboutNoInfo: "Henüz bilgi mevcut değil.",
+
+        // Comments
+        commentsTitle: "Yorumlar",
+        commentsName: "Adınız",
+        commentsNamePlaceholder: "Adınızı girin",
+        commentsContent: "Yorumunuz",
+        commentsContentPlaceholder: "Yorumunuzu yazın...",
+        commentsSubmit: "Yorum Gönder",
+        commentsSubmitting: "Gönderiliyor...",
+        commentsEmpty: "Henüz yorum yok. İlk yorumu siz yapın!",
     },
 } as const;
 
