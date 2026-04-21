@@ -8,6 +8,8 @@ import { Card } from '@/components/ui/Card';
 import { LogoutButton } from './LogoutButton';
 import { useLanguage } from '@/lib/LanguageContext';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface Post {
     id: string;
@@ -26,8 +28,10 @@ export default function AdminDashboard() {
     const router = useRouter();
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState(false);
 
-    useEffect(() => {
+    const fetchPosts = () => {
+        setLoading(true);
         fetch('/api/posts')
             .then(res => {
                 if (res.status === 401) {
@@ -43,6 +47,10 @@ export default function AdminDashboard() {
             .catch(() => {
                 setLoading(false);
             });
+    };
+
+    useEffect(() => {
+        fetchPosts();
     }, [router]);
 
     function formatDate(date: string): string {
@@ -84,6 +92,81 @@ export default function AdminDashboard() {
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
+    };
+
+    const handleDownloadPDF = async (post: Post) => {
+        setActionLoading(true);
+        try {
+            const doc = new jsPDF({
+                unit: 'pt',
+                format: 'a4',
+            });
+
+            // Create a temporary container for PDF rendering
+            const container = document.createElement('div');
+            container.style.width = '595pt'; // A4 width
+            container.style.padding = '40pt';
+            container.style.backgroundColor = 'white';
+            container.style.color = '#1a1a1a';
+            container.style.fontFamily = 'serif';
+
+            container.innerHTML = `
+                <h1 style="font-size: 24pt; margin-bottom: 10pt;">${post.title}</h1>
+                <p style="color: #666; margin-bottom: 20pt;">${formatDate(post.createdAt)}</p>
+                <div style="font-size: 12pt; line-height: 1.6;">${post.content}</div>
+            `;
+            document.body.appendChild(container);
+
+            const canvas = await html2canvas(container, {
+                scale: 2,
+                useCORS: true,
+            });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            
+            doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            doc.save(`${post.slug}.pdf`);
+            
+            document.body.removeChild(container);
+        } catch (err) {
+            console.error('PDF Export Error:', err);
+            alert('PDF could not be generated.');
+        } finally {
+            setActionLoading(false);
+        }
+    };
+
+    const handleRestore = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setActionLoading(true);
+        try {
+            const text = await file.text();
+            const data = JSON.parse(text);
+
+            const res = await fetch('/api/posts/restore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (res.ok) {
+                alert(language === 'tr' ? 'Yedek başarıyla yüklendi!' : 'Backup restored successfully!');
+                fetchPosts();
+            } else {
+                const err = await res.json();
+                alert(err.error || 'Restore failed');
+            }
+        } catch (err) {
+            console.error('Restore Error:', err);
+            alert('Invalid backup file');
+        } finally {
+            setActionLoading(false);
+            event.target.value = ''; // Reset input
+        }
     };
 
     if (loading) {
@@ -128,15 +211,39 @@ export default function AdminDashboard() {
                         <h2 className="font-serif text-2xl font-bold text-ink">{t('adminArticles')}</h2>
                         <p className="text-ink-muted mt-1">{posts.length} {t('adminArticlesTotal')}</p>
                     </div>
-                    <div className="flex gap-3">
-                        <Button variant="secondary" onClick={handleDownloadAll} disabled={posts.length === 0}>
+                    <div className="flex flex-wrap gap-3">
+                        <div className="relative">
+                            <input
+                                type="file"
+                                accept=".json"
+                                onChange={handleRestore}
+                                className="hidden"
+                                id="restore-upload"
+                                disabled={actionLoading}
+                            />
+                            <label
+                                htmlFor="restore-upload"
+                                className={`
+                                    inline-flex items-center px-4 py-2 border border-paper-dark rounded-md 
+                                    text-sm font-medium text-ink bg-paper-light hover:bg-paper-dark 
+                                    transition-colors cursor-pointer
+                                    ${actionLoading ? 'opacity-50 cursor-not-allowed' : ''}
+                                `}
+                            >
+                                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" />
+                                </svg>
+                                {language === 'tr' ? 'Yedek Yükle' : 'Restore Backup'}
+                            </label>
+                        </div>
+                        <Button variant="secondary" onClick={handleDownloadAll} disabled={posts.length === 0 || actionLoading}>
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
                             {language === 'tr' ? 'Tümünü Yedekle' : 'Backup All'}
                         </Button>
                         <Link href="/admin/editor/new">
-                            <Button>
+                            <Button disabled={actionLoading}>
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
@@ -202,9 +309,20 @@ export default function AdminDashboard() {
                                             onClick={() => handleDownloadPost(post)}
                                             className="p-2 text-ink-muted hover:text-federal-green transition-colors"
                                             title={language === 'tr' ? 'Yedeği İndir' : 'Download Backup'}
+                                            disabled={actionLoading}
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                        </button>
+                                        <button
+                                            onClick={() => handleDownloadPDF(post)}
+                                            className="p-2 text-ink-muted hover:text-federal-green transition-colors"
+                                            title={language === 'tr' ? 'PDF Olarak İndir' : 'Download as PDF'}
+                                            disabled={actionLoading}
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                             </svg>
                                         </button>
                                         <Link
