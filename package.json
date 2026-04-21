@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "db:backup": "ts-node scripts/backup-db.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

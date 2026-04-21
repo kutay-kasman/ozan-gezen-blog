@@ -14,6 +14,9 @@ interface Post {
     title: string;
     slug: string;
     status: string;
+    content: string;
+    excerpt?: string;
+    coverImage?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -51,6 +54,37 @@ export default function AdminDashboard() {
             minute: '2-digit',
         }).format(new Date(date));
     }
+
+    const handleDownloadPost = (post: Post) => {
+        const postData = {
+            title: post.title,
+            slug: post.slug,
+            status: post.status,
+            content: post.content,
+            excerpt: post.excerpt,
+            coverImage: post.coverImage,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(postData, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", `${post.slug}-backup.json`);
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    };
+
+    const handleDownloadAll = () => {
+        if (posts.length === 0) return;
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(posts, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", `all-posts-backup-${new Date().toISOString().split('T')[0]}.json`);
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    };
 
     if (loading) {
         return (
@@ -94,14 +128,22 @@ export default function AdminDashboard() {
                         <h2 className="font-serif text-2xl font-bold text-ink">{t('adminArticles')}</h2>
                         <p className="text-ink-muted mt-1">{posts.length} {t('adminArticlesTotal')}</p>
                     </div>
-                    <Link href="/admin/editor/new">
-                        <Button>
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    <div className="flex gap-3">
+                        <Button variant="outline" onClick={handleDownloadAll} disabled={posts.length === 0}>
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            {t('adminNewArticle')}
+                            {language === 'tr' ? 'Tümünü Yedekle' : 'Backup All'}
                         </Button>
-                    </Link>
+                        <Link href="/admin/editor/new">
+                            <Button>
+                                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                                {t('adminNewArticle')}
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Posts List */}
@@ -156,6 +198,15 @@ export default function AdminDashboard() {
                                                 </svg>
                                             </Link>
                                         )}
+                                        <button
+                                            onClick={() => handleDownloadPost(post)}
+                                            className="p-2 text-ink-muted hover:text-federal-green transition-colors"
+                                            title={language === 'tr' ? 'Yedeği İndir' : 'Download Backup'}
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                        </button>
                                         <Link
                                             href={`/admin/editor/${post.id}`}
                                             className="p-2 text-ink-muted hover:text-federal-green transition-colors"
