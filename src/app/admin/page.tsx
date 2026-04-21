@@ -6,10 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { LogoutButton } from './LogoutButton';
-import { useLanguage } from '@/lib/LanguageContext';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 
 interface Post {
     id: string;
@@ -92,50 +89,6 @@ export default function AdminDashboard() {
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
-    };
-
-    const handleDownloadPDF = async (post: Post) => {
-        setActionLoading(true);
-        try {
-            const doc = new jsPDF({
-                unit: 'pt',
-                format: 'a4',
-            });
-
-            // Create a temporary container for PDF rendering
-            const container = document.createElement('div');
-            container.style.width = '595pt'; // A4 width
-            container.style.padding = '40pt';
-            container.style.backgroundColor = 'white';
-            container.style.color = '#1a1a1a';
-            container.style.fontFamily = 'serif';
-
-            container.innerHTML = `
-                <h1 style="font-size: 24pt; margin-bottom: 10pt;">${post.title}</h1>
-                <p style="color: #666; margin-bottom: 20pt;">${formatDate(post.createdAt)}</p>
-                <div style="font-size: 12pt; line-height: 1.6;">${post.content}</div>
-            `;
-            document.body.appendChild(container);
-
-            const canvas = await html2canvas(container, {
-                scale: 2,
-                useCORS: true,
-            });
-            const imgData = canvas.toDataURL('image/png');
-            
-            const pdfWidth = doc.internal.pageSize.getWidth();
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            
-            doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            doc.save(`${post.slug}.pdf`);
-            
-            document.body.removeChild(container);
-        } catch (err) {
-            console.error('PDF Export Error:', err);
-            alert('PDF could not be generated.');
-        } finally {
-            setActionLoading(false);
-        }
     };
 
     const handleRestore = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -313,16 +266,6 @@ export default function AdminDashboard() {
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                            </svg>
-                                        </button>
-                                        <button
-                                            onClick={() => handleDownloadPDF(post)}
-                                            className="p-2 text-ink-muted hover:text-federal-green transition-colors"
-                                            title={language === 'tr' ? 'PDF Olarak İndir' : 'Download as PDF'}
-                                            disabled={actionLoading}
-                                        >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                             </svg>
                                         </button>
                                         <Link
