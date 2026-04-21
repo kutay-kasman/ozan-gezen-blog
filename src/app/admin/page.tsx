@@ -63,12 +63,14 @@ export default function AdminDashboard() {
 
     const handleDownloadPost = (post: Post) => {
         const postData = {
+            id: post.id,
             title: post.title,
             slug: post.slug,
             status: post.status,
             content: post.content,
             excerpt: post.excerpt,
             coverImage: post.coverImage,
+            comments: post.comments,
             createdAt: post.createdAt,
             updatedAt: post.updatedAt,
         };

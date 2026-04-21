@@ -11,9 +11,25 @@ export async function POST(request: NextRequest) {
 
         const data = await request.json();
         
-        // Data can be a single post object or the "backupData" object containing posts + settings
-        const posts = Array.isArray(data) ? data : (data.posts || []);
-        const settings = data.settings || [];
+        // Data can be:
+        // 1. A single post object (from Single Download)
+        // 2. An array of post objects (from All Download)
+        // 3. A "backupData" object containing posts + settings (from Automate Backup)
+        
+        let posts: any[] = [];
+        let settings: any[] = [];
+
+        if (Array.isArray(data)) {
+            // Case 2: Array of posts
+            posts = data;
+        } else if (data.posts && Array.isArray(data.posts)) {
+            // Case 3: Complete backup object
+            posts = data.posts;
+            settings = data.settings || [];
+        } else if (data.slug) {
+            // Case 1: Single post object
+            posts = [data];
+        }
 
         console.log(`🏠 Restoring ${posts.length} posts and ${settings.length} site settings...`);
 
@@ -35,17 +51,17 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        // 2. Restore Posts
+        // 2. Restore Posts and their Comments
         const results = {
-            created: 0,
-            updated: 0,
+            processed: 0,
+            commentsRestored: 0,
             errors: 0
         };
 
         for (const post of posts) {
             try {
                 // Determine if we should create or update based on slug (unique)
-                await prisma.post.upsert({
+                const upsertedPost = await prisma.post.upsert({
                     where: { slug: post.slug },
                     update: {
                         title: post.title,
@@ -56,7 +72,7 @@ export async function POST(request: NextRequest) {
                         updatedAt: new Date(),
                     },
                     create: {
-                        id: post.id, // Keep the same ID if possible
+                        id: post.id || undefined, // Use existing ID if provided
                         title: post.title,
                         slug: post.slug,
                         content: typeof post.content === 'string' ? post.content : JSON.stringify(post.content),
@@ -65,16 +81,41 @@ export async function POST(request: NextRequest) {
                         status: post.status || 'DRAFT',
                     }
                 });
-                results.updated++; // Upsert doesn't tell us if it created or updated easily without checking first
+
+                // 3. Restore Comments if present in the data
+                // We handle comments by deleting existing ones for this post and re-inserting
+                // to match the state of the backup.
+                if (Array.isArray(post.comments)) {
+                    // Delete existing comments for this specific post
+                    await prisma.comment.deleteMany({
+                        where: { postId: upsertedPost.id }
+                    });
+
+                    // Create new comments from backup
+                    if (post.comments.length > 0) {
+                        await prisma.comment.createMany({
+                            data: post.comments.map((comment: any) => ({
+                                id: comment.id || undefined, // Use existing ID if provided
+                                name: comment.name,
+                                content: comment.content,
+                                postId: upsertedPost.id,
+                                createdAt: comment.createdAt ? new Date(comment.createdAt) : undefined
+                            }))
+                        });
+                        results.commentsRestored += post.comments.length;
+                    }
+                }
+
+                results.processed++;
             } catch (err) {
-                console.error(`❌ Error restoring post "${post.title}":`, err);
+                console.error(`❌ Error restoring post "${post.title || post.slug}":`, err);
                 results.errors++;
             }
         }
 
         return NextResponse.json({ 
             success: true, 
-            message: `Restored ${posts.length} posts and settings.`,
+            message: `Restored ${results.processed} posts and ${results.commentsRestored} comments.`,
             results 
         });
 
