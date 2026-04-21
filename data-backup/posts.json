@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": "cmo8j7pib0000zxq0b9hjuk5d",
+    "title": "Ozangezen.com Versiyon2",
+    "slug": "new-version",
+    "content": "{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Deneme\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"as\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"fasf\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"sa\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"fsa\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"fsa\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":1},\"content\":[{\"type\":\"text\",\"marks\":[{\"type\":\"bold\"}],\"text\":\"asaffasf\"}]},{\"type\":\"paragraph\"},{\"type\":\"horizontalRule\"},{\"type\":\"blockquote\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"fsf\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"aasdas\"}]}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"marks\":[{\"type\":\"code\"}],\"text\":\"print(\\\"hello world\\\")\"}]},{\"type\":\"image\",\"attrs\":{\"src\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_Scholar_home_page.png/330px-Google_Scholar_home_page.png\",\"alt\":null,\"title\":null,\"width\":null,\"height\":null}},{\"type\":\"paragraph\"}]}",
+    "excerpt": "Ozangezen.com sitesinin yeni versiyonu denemesi ",
+    "coverImage": "https://res.cloudinary.com/dozy4fhk7/image/upload/v1776770312/ozan-blog/v8zzmkskau0whcsuyg1v.jpg",
+    "status": "PUBLISHED",
+    "createdAt": "2026-04-21T11:19:47.939Z",
+    "updatedAt": "2026-04-21T11:19:47.939Z",
+    "comments": [
+      {
+        "id": "cmo8j97210002zxq04lrvw94u",
+        "name": "kasman",
+        "content": "test1",
+        "postId": "cmo8j7pib0000zxq0b9hjuk5d",
+        "createdAt": "2026-04-21T11:20:57.337Z"
+      }
+    ]
+  }
+]
