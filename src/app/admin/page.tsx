@@ -9,6 +9,13 @@ import { LogoutButton } from './LogoutButton';
 import { useLanguage } from '@/lib/LanguageContext';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
+interface Comment {
+    id: string;
+    name: string;
+    content: string;
+    createdAt: string;
+}
+
 interface Post {
     id: string;
     title: string;
@@ -19,6 +26,7 @@ interface Post {
     coverImage?: string;
     createdAt: string;
     updatedAt: string;
+    comments?: Comment[];
 }
 
 export default function AdminDashboard() {
