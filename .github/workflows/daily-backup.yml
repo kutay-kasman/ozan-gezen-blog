@@ -29,7 +29,7 @@ jobs:
 
       - name: Run backup script
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.DATABASE_URL }}
         run: npx tsx scripts/backup-db.ts
 
       - name: Commit and push changes
