@@ -5,6 +5,9 @@ on:
     - cron: '0 0 * * *' # Every night at midnight UTC
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
+permissions:
+  contents: write
+
 jobs:
   backup:
     runs-on: ubuntu-latest
