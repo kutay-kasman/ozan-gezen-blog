@@ -12,8 +12,21 @@ export function Footer() {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     {/* Left - Branding */}
                     <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full border border-federal-green flex items-center justify-center">
-                            <span className="text-federal-green font-serif text-sm font-bold">$</span>
+                        <div className="w-6 h-6 rounded-full border border-federal-green flex items-center justify-center p-1">
+                            <svg 
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                strokeWidth="2.2" 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round"
+                                className="w-full h-full text-federal-green"
+                            >
+                                <circle cx="12" cy="12" r="10" strokeDasharray="4 4" />
+                                <path d="M12 2a10 10 0 0 1 10 10M12 2v4M12 18v4M2 12h4" />
+                                <path d="M8 12a4 4 0 1 1 4 4" />
+                                <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+                            </svg>
                         </div>
                         <span className="text-sm text-ink-muted">{t('siteName')}</span>
                     </div>

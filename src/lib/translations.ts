@@ -2,12 +2,13 @@
 export const translations = {
     en: {
         // Site
-        siteName: "Ozan Gezen Economics",
-        siteTagline: "Analysis & Insights",
+        siteName: "Ozan Gezen Blog",
+        siteTagline: "Understanding and Making Sense of Things",
 
         // Home Hero
-        heroTitle: "Financial Wisdom",
-        heroSubtitle: "Deep insights on money, markets, and the art of building wealth. No noise. Just signal.",
+        heroTitle: "",
+        heroSubtitle:
+            "Welcome to my blog, where I share what I've learned in order to know, understand, and make sense of things.",
 
         // Navigation
         navArticles: "Articles",
@@ -15,12 +16,12 @@ export const translations = {
 
         // Posts
         noArticlesTitle: "No articles yet",
-        noArticlesText: "The vault is empty. Check back soon for financial insights.",
+        noArticlesText: "No writings yet. Check back soon for new articles.",
         readArticle: "Read article",
 
         // Footer
         footerCopy: "All rights reserved.",
-        footerMotto: "In Finance We Trust",
+        footerMotto: "Beyond Appearances",
 
         // Admin
         adminDashboard: "Admin Dashboard",
@@ -97,59 +98,60 @@ export const translations = {
     },
     tr: {
         // Site
-        siteName: "Ozan Gezen Ekonomi",
-        siteTagline: "Analiz & İçgörü",
+        siteName: "Ozan Gezen Blog",
+        siteTagline: "Anlamak ve Anlamlandırmak Üzerine",
 
         // Home Hero
-        heroTitle: "Finansal Bilgelik",
-        heroSubtitle: "Para, piyasalar ve servet inşa etme sanatı üzerine derin içgörüler. Boş sözleri değil, veriyi takip edin.",
+        heroTitle: "",
+        heroSubtitle:
+            "Bilmek, anlamak ve anlamlandırmak için öğrendiklerimi paylaştığım blog sayfama hoş geldiniz.",
 
         // Navigation
-        navArticles: "Makaleler",
+        navArticles: "Yazılar",
         navAbout: "Hakkında",
 
         // Posts
-        noArticlesTitle: "Henüz makale yok",
-        noArticlesText: "Kasa boş. Finansal içgörüler için yakında tekrar kontrol edin.",
-        readArticle: "Makaleyi oku",
+        noArticlesTitle: "Henüz yazı yok",
+        noArticlesText: "Henüz içerik yok. Yeni yazılar için yakında tekrar uğrayın.",
+        readArticle: "Yazıyı oku",
 
         // Footer
         footerCopy: "Tüm hakları saklıdır.",
-        footerMotto: "Finansta Güveniyoruz",
+        footerMotto: "Görünenden Fazlası",
 
         // Admin
         adminDashboard: "Yönetici Paneli",
-        adminArticles: "Makaleler",
-        adminArticlesTotal: "makale toplamda",
-        adminNewArticle: "Yeni Makale",
-        adminNoArticles: "Henüz makale yok",
-        adminCreateFirst: "Başlamak için ilk makalenizi oluşturun.",
-        adminCreateArticle: "Makale Oluştur",
+        adminArticles: "Yazılar",
+        adminArticlesTotal: "yazı toplamda",
+        adminNewArticle: "Yeni Yazı",
+        adminNoArticles: "Henüz yazı yok",
+        adminCreateFirst: "Başlamak için ilk yazınızı oluşturun.",
+        adminCreateArticle: "Yazı Oluştur",
         adminLastEdited: "Son düzenleme",
         adminViewSite: "Siteyi Gör",
         adminSignOut: "Çıkış Yap",
 
         // Editor
-        editorNew: "Yeni Makale",
-        editorEdit: "Makaleyi Düzenle",
+        editorNew: "Yeni Yazı",
+        editorEdit: "Yazıyı Düzenle",
         editorPublished: "Yayınlandı",
         editorDraft: "Taslak",
         editorSaveDraft: "Taslak Kaydet",
         editorPublish: "Yayınla",
         editorSaving: "Kaydediliyor...",
         editorDelete: "Sil",
-        editorTitlePlaceholder: "Makale başlığı",
+        editorTitlePlaceholder: "Yazı başlığı",
         editorSlugLabel: "URL:",
-        editorSlugPlaceholder: "makale-url",
+        editorSlugPlaceholder: "yazi-url",
         editorExcerptLabel: "Özet",
-        editorExcerptPlaceholder: "Makalenin kısa açıklaması (ana sayfada gösterilir)",
+        editorExcerptPlaceholder: "Yazının kısa açıklaması (ana sayfada gösterilir)",
         editorCoverLabel: "Kapak Görseli",
         editorCoverPlaceholder: "https://ornek.com/gorsel.jpg",
         editorUploadImage: "Görsel Yükle",
         editorUploading: "Yükleniyor...",
         editorOrEnterUrl: "veya URL girin:",
         editorContentLabel: "İçerik",
-        editorStartWriting: "Makalenizi yazmaya başlayın...",
+        editorStartWriting: "Yazınızı yazmaya başlayın...",
         editorImagePrompt: "Görsel URL girin:",
 
         // Login
@@ -165,7 +167,7 @@ export const translations = {
         loginError: "Geçersiz kimlik bilgileri",
 
         // Post Page
-        backToArticles: "Makalelere dön",
+        backToArticles: "Yazılara dön",
         thanksReading: "Okuduğunuz için teşekkürler.",
 
         // Language

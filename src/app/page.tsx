@@ -52,10 +52,12 @@ export default function HomePage() {
         <section className="py-16 md:py-24 border-b border-paper-dark">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <div className="border-engraving inline-block p-8 mb-8 rounded-lg bg-paper-light/50">
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-ink mb-4 embossed">
-                {t('heroTitle')}
-              </h1>
-              <p className="text-ink-light text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              {t('heroTitle') && (
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-ink mb-4 embossed">
+                  {t('heroTitle')}
+                </h1>
+              )}
+              <p className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-ink max-w-2xl mx-auto leading-tight">
                 {t('heroSubtitle')}
               </p>
             </div>
@@ -86,8 +88,23 @@ export default function HomePage() {
               </div>
             ) : posts.length === 0 ? (
               <div className="text-center py-16">
-                <div className="w-16 h-16 rounded-full border-2 border-dashed border-federal-green/30 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-federal-green/50 text-2xl">$</span>
+                <div className="w-16 h-16 rounded-full border-2 border-dashed border-federal-green/30 flex items-center justify-center mx-auto mb-6 p-3">
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="1.2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                    className="w-full h-full text-federal-green/40"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="7" strokeDasharray="5 2 8 3" />
+                    <circle cx="12" cy="12" r="4" strokeDasharray="3 2" />
+                    <path d="M12 2v2M12 15v2M7 12h2M15 12h2" />
+                    <path d="M12 7v2M12 12h3" />
+                    <circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none" />
+                  </svg>
                 </div>
                 <h2 className="font-serif text-2xl text-ink-light mb-3">{t('noArticlesTitle')}</h2>
                 <p className="text-ink-muted">

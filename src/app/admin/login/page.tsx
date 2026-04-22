@@ -49,8 +49,25 @@ export default function LoginPage() {
             <div className="w-full max-w-md">
                 {/* Logo */}
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 rounded-full border-2 border-federal-green flex items-center justify-center mx-auto mb-4 bg-paper-light embossed-inset">
-                        <span className="text-federal-green font-serif text-3xl font-bold">$</span>
+                    <div className="w-16 h-16 rounded-full border-2 border-federal-green flex items-center justify-center mx-auto mb-4 bg-paper-light embossed-inset p-2.5">
+                        <svg 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="1.2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                            className="w-full h-full text-federal-green"
+                        >
+                            <circle cx="12" cy="12" r="11" />
+                            <circle cx="12" cy="12" r="8" strokeDasharray="14 4 10 6" />
+                            <circle cx="12" cy="12" r="5" strokeDasharray="6 3 8 2" strokeDashoffset="2" />
+                            <circle cx="12" cy="12" r="2" strokeDasharray="2 1" />
+                            <path d="M12 1v2M12 19v2M1 12h2M19 12h2" />
+                            <path d="M12 4v1M12 9v1M12 14v1M12 20v1" opacity="0.3" />
+                            <path d="M4 12h1M9 12h1M14 12h1M20 12h1" opacity="0.3" />
+                            <circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none" />
+                        </svg>
                     </div>
                     <h1 className="font-serif text-3xl font-bold text-ink">{t('loginTitle')}</h1>
                     <p className="text-ink-muted mt-2">{t('loginSubtitle')}</p>

@@ -36,7 +36,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     };
 
     const t = (key: TranslationKey): string => {
-        return translations[language][key] || translations.en[key] || key;
+        const value = translations[language][key];
+        return value !== undefined ? value : (translations.en[key] || key);
     };
 
     // Prevent hydration mismatch by not rendering until mounted

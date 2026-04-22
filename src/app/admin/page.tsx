@@ -147,8 +147,21 @@ export default function AdminDashboard() {
             <header className="border-b border-paper-dark bg-paper-light/80 backdrop-blur-sm sticky top-0 z-50">
                 <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full border-2 border-federal-green flex items-center justify-center bg-paper">
-                            <span className="text-federal-green font-serif text-sm font-bold">$</span>
+                        <div className="w-8 h-8 rounded-full border-2 border-federal-green flex items-center justify-center bg-paper p-1.5">
+                            <svg 
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                strokeWidth="2" 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round"
+                                className="w-full h-full text-federal-green"
+                            >
+                                <circle cx="12" cy="12" r="10" strokeDasharray="4 4" />
+                                <path d="M12 2a10 10 0 0 1 10 10M12 2v4M12 18v4M2 12h4" />
+                                <path d="M8 12a4 4 0 1 1 4 4" />
+                                <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+                            </svg>
                         </div>
                         <div>
                             <h1 className="font-serif text-lg font-bold text-ink">{t('adminDashboard')}</h1>
