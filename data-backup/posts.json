@@ -7,16 +7,20 @@
     "excerpt": "Ozangezen.com sitesinin yeni versiyonu denemesi ",
     "coverImage": "https://res.cloudinary.com/dozy4fhk7/image/upload/v1776770312/ozan-blog/v8zzmkskau0whcsuyg1v.jpg",
     "status": "PUBLISHED",
-    "createdAt": "2026-04-21T11:19:47.939Z",
-    "updatedAt": "2026-04-21T11:19:47.939Z",
-    "comments": [
-      {
-        "id": "cmo8j97210002zxq04lrvw94u",
-        "name": "kasman",
-        "content": "test1",
-        "postId": "cmo8j7pib0000zxq0b9hjuk5d",
-        "createdAt": "2026-04-21T11:20:57.337Z"
-      }
-    ]
+    "createdAt": "2026-04-21T12:27:21.361Z",
+    "updatedAt": "2026-04-21T12:27:21.361Z",
+    "comments": []
+  },
+  {
+    "id": "cmo8kfptp0000v3hc33t3uars",
+    "title": "Denem2",
+    "slug": "denem2",
+    "content": "{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Start writing your asafsşlf\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"as\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"fas\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"fa\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"sf\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"sas\"}]},{\"type\":\"paragraph\"},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"article...\"}]}]}",
+    "excerpt": "asfnlan",
+    "coverImage": "https://media.licdn.com/dms/image/v2/D4D03AQHgLibDKEhEyA/profile-displayphoto-scale_200_200/B4DZn.RGP_HsAY-/0/1760907520859?e=2147483647&v=beta&t=iR5TQB1iOqI9O2WyhOLCpV9glI_KXrnbCMWlp1PIN9w",
+    "status": "PUBLISHED",
+    "createdAt": "2026-04-21T12:27:20.926Z",
+    "updatedAt": "2026-04-21T12:27:20.926Z",
+    "comments": []
   }
 ]
