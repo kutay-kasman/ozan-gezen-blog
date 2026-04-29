@@ -15,7 +15,7 @@ interface CommentsSectionProps {
 }
 
 export function CommentsSection({ postId }: CommentsSectionProps) {
-    const { t, language } = useLanguage();
+    const { t } = useLanguage();
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
@@ -64,7 +64,7 @@ export function CommentsSection({ postId }: CommentsSectionProps) {
     };
 
     const formatDate = (dateStr: string) => {
-        return new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-US', {
+        return new Intl.DateTimeFormat('tr-TR', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',

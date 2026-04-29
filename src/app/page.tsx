@@ -17,8 +17,8 @@ interface Post {
   createdAt: string;
 }
 
-function formatDate(date: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale === 'tr' ? 'tr-TR' : 'en-US', {
+function formatDate(date: string): string {
+  return new Intl.DateTimeFormat('tr-TR', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -26,7 +26,7 @@ function formatDate(date: string, locale: string): string {
 }
 
 export default function HomePage() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -89,12 +89,12 @@ export default function HomePage() {
             ) : posts.length === 0 ? (
               <div className="text-center py-16">
                 <div className="w-16 h-16 rounded-full border-2 border-dashed border-federal-green/30 flex items-center justify-center mx-auto mb-6 p-3">
-                  <svg 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="1.2" 
-                    strokeLinecap="round" 
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
                     strokeLinejoin="round"
                     className="w-full h-full text-federal-green/40"
                   >
@@ -135,7 +135,7 @@ export default function HomePage() {
                           <div className="flex items-center gap-2 mb-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-federal-green"></div>
                             <time className="text-sm text-ink-muted tracking-wide uppercase">
-                              {formatDate(post.createdAt, language)}
+                              {formatDate(post.createdAt)}
                             </time>
                           </div>
 

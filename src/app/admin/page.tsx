@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { LogoutButton } from './LogoutButton';
 import { useLanguage } from '@/lib/LanguageContext';
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+
 
 interface Comment {
     id: string;
@@ -30,7 +30,7 @@ interface Post {
 }
 
 export default function AdminDashboard() {
-    const { t, language } = useLanguage();
+    const { t } = useLanguage();
     const router = useRouter();
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
@@ -60,7 +60,7 @@ export default function AdminDashboard() {
     }, [router]);
 
     function formatDate(date: string): string {
-        return new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-US', {
+        return new Intl.DateTimeFormat('tr-TR', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
             });
 
             if (res.ok) {
-                alert(language === 'tr' ? 'Yedek başarıyla yüklendi!' : 'Backup restored successfully!');
+                alert('Yedek başarıyla yüklendi!');
                 fetchPosts();
             } else {
                 const err = await res.json();
@@ -169,7 +169,7 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <LanguageSwitcher />
+
                         <Link href="/admin/about" className="text-sm text-ink-muted hover:text-federal-green transition-colors">
                             {t('aboutTitle')}
                         </Link>
@@ -210,14 +210,14 @@ export default function AdminDashboard() {
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" />
                                 </svg>
-                                {language === 'tr' ? 'Yedek Yükle' : 'Restore Backup'}
+                                Yedek Yükle
                             </label>
                         </div>
                         <Button variant="secondary" onClick={handleDownloadAll} disabled={posts.length === 0 || actionLoading}>
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            {language === 'tr' ? 'Tümünü Yedekle' : 'Backup All'}
+                            Tümünü Yedekle
                         </Button>
                         <Link href="/admin/editor/new">
                             <Button disabled={actionLoading}>
@@ -285,7 +285,7 @@ export default function AdminDashboard() {
                                         <button
                                             onClick={() => handleDownloadPost(post)}
                                             className="p-2 text-ink-muted hover:text-federal-green transition-colors"
-                                            title={language === 'tr' ? 'Yedeği İndir' : 'Download Backup'}
+                                            title="Yedeği İndir"
                                             disabled={actionLoading}
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { useLanguage } from '@/lib/LanguageContext';
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+
 
 export default function LoginPage() {
     const { t } = useLanguage();
@@ -41,10 +41,7 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center px-6">
-            {/* Language Switcher */}
-            <div className="absolute top-6 right-6">
-                <LanguageSwitcher />
-            </div>
+
 
             <div className="w-full max-w-md">
                 {/* Logo */}

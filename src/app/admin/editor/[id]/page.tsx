@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { TiptapEditor } from '@/components/editor/TiptapEditor';
 import { useLanguage } from '@/lib/LanguageContext';
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+
 import Link from 'next/link';
 
 interface Props {
@@ -196,7 +196,7 @@ export default function EditorPage({ params }: Props) {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <LanguageSwitcher />
+
                         {!isNew && (
                             <button
                                 onClick={handleDelete}

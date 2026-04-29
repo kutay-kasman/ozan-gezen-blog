@@ -1,101 +1,5 @@
-// Translations for Turkish and English
+// Translations - Turkish only
 export const translations = {
-    en: {
-        // Site
-        siteName: "Ozan Gezen Blog",
-        siteTagline: "Understanding and Making Sense of Things",
-
-        // Home Hero
-        heroTitle: "",
-        heroSubtitle:
-            "Welcome to my blog, where I share what I've learned in order to know, understand, and make sense of things.",
-
-        // Navigation
-        navArticles: "Articles",
-        navAbout: "About",
-
-        // Posts
-        noArticlesTitle: "No articles yet",
-        noArticlesText: "No writings yet. Check back soon for new articles.",
-        readArticle: "Read article",
-
-        // Footer
-        footerCopy: "All rights reserved.",
-        footerMotto: "Beyond Appearances",
-
-        // Admin
-        adminDashboard: "Admin Dashboard",
-        adminArticles: "Articles",
-        adminArticlesTotal: "article(s) total",
-        adminNewArticle: "New Article",
-        adminNoArticles: "No articles yet",
-        adminCreateFirst: "Create your first article to get started.",
-        adminCreateArticle: "Create Article",
-        adminLastEdited: "Last edited",
-        adminViewSite: "View Site",
-        adminSignOut: "Sign Out",
-
-        // Editor
-        editorNew: "New Article",
-        editorEdit: "Edit Article",
-        editorPublished: "Published",
-        editorDraft: "Draft",
-        editorSaveDraft: "Save Draft",
-        editorPublish: "Publish",
-        editorSaving: "Saving...",
-        editorDelete: "Delete",
-        editorTitlePlaceholder: "Article title",
-        editorSlugLabel: "Slug:",
-        editorSlugPlaceholder: "article-slug",
-        editorExcerptLabel: "Excerpt",
-        editorExcerptPlaceholder: "Brief description of the article (shown on the home page)",
-        editorCoverLabel: "Cover Image",
-        editorCoverPlaceholder: "https://example.com/image.jpg",
-        editorUploadImage: "Upload Image",
-        editorUploading: "Uploading...",
-        editorOrEnterUrl: "or enter URL:",
-        editorContentLabel: "Content",
-        editorStartWriting: "Start writing your article...",
-        editorImagePrompt: "Enter image URL:",
-
-        // Login
-        loginTitle: "Admin Access",
-        loginSubtitle: "Enter your credentials to continue",
-        loginUsername: "Username",
-        loginUsernamePlaceholder: "Enter username",
-        loginPassword: "Password",
-        loginPasswordPlaceholder: "Enter password",
-        loginButton: "Sign In",
-        loginLoading: "Signing in...",
-        loginProtected: "Protected area. Authorized personnel only.",
-        loginError: "Invalid credentials",
-
-        // Post Page
-        backToArticles: "Back to articles",
-        thanksReading: "Thanks for reading.",
-
-        // Language
-        languageSwitch: "Language",
-        languageEn: "English",
-        languageTr: "Türkçe",
-
-        // About
-        aboutTitle: "About Me",
-        aboutBioPlaceholder: "Write something about yourself...",
-        aboutPhotoLabel: "Profile Photo",
-        aboutSaveSuccess: "About info saved successfully!",
-        aboutNoInfo: "No information available yet.",
-
-        // Comments
-        commentsTitle: "Comments",
-        commentsName: "Your Name",
-        commentsNamePlaceholder: "Enter your name",
-        commentsContent: "Your Comment",
-        commentsContentPlaceholder: "Write your comment...",
-        commentsSubmit: "Submit Comment",
-        commentsSubmitting: "Submitting...",
-        commentsEmpty: "No comments yet. Be the first to comment!",
-    },
     tr: {
         // Site
         siteName: "Ozan Gezen Blog",
@@ -170,11 +74,6 @@ export const translations = {
         backToArticles: "Yazılara dön",
         thanksReading: "Okuduğunuz için teşekkürler.",
 
-        // Language
-        languageSwitch: "Dil",
-        languageEn: "English",
-        languageTr: "Türkçe",
-
         // About
         aboutTitle: "Hakkımda",
         aboutBioPlaceholder: "Kendiniz hakkında bir şeyler yazın...",
@@ -195,4 +94,4 @@ export const translations = {
 } as const;
 
 export type Language = keyof typeof translations;
-export type TranslationKey = keyof typeof translations.en;
+export type TranslationKey = keyof typeof translations.tr;

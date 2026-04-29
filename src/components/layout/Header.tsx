@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+
 
 export function Header() {
     const { t } = useLanguage();
@@ -53,7 +53,7 @@ export function Header() {
                     >
                         {t('navAbout')}
                     </Link>
-                    <LanguageSwitcher />
+
                 </nav>
             </div>
         </header>
