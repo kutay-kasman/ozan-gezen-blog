@@ -52,11 +52,6 @@ export default function HomePage() {
         <section className="py-16 md:py-24 border-b border-paper-dark">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <div className="border-engraving inline-block p-8 mb-8 rounded-lg bg-paper-light/50">
-              {t('heroTitle') && (
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-ink mb-4 embossed">
-                  {t('heroTitle')}
-                </h1>
-              )}
               <p className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-ink max-w-2xl mx-auto leading-tight">
                 {t('heroSubtitle')}
               </p>

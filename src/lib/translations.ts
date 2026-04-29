@@ -6,7 +6,6 @@ export const translations = {
         siteTagline: "Anlamak ve Anlamlandırmak Üzerine",
 
         // Home Hero
-        heroTitle: "",
         heroSubtitle:
             "Bilmek, anlamak ve anlamlandırmak için öğrendiklerimi paylaştığım blog sayfama hoş geldiniz.",
 
